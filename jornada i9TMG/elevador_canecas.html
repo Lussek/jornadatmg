@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cálculo de Elevador de Canecas</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap');
+
+  :root {
+    --bg: #0f1117;
+    --surface: #181c27;
+    --surface2: #1e2335;
+    --border: #2a3050;
+    --accent: #4a9eff;
+    --accent2: #f0a500;
+    --green: #3dd68c;
+    --red: #ff5f5f;
+    --text: #c9d1e0;
+    --muted: #5a6480;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  header .logo {
+    width: 36px; height: 36px;
+    background: var(--accent);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 13px;
+    color: #fff;
+    letter-spacing: -0.5px;
+  }
+
+  header h1 {
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+
+  header span {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  /* INPUTS PANEL */
+  .panel-inputs {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    position: sticky;
+    top: 72px;
+  }
+
+  .panel-header {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .panel-header .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .panel-header h2 {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .panel-body { padding: 18px; }
+
+  .input-group {
+    margin-bottom: 14px;
+  }
+
+  .input-group label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+  }
+
+  .input-group label span {
+    color: var(--accent);
+    font-size: 10px;
+  }
+
+  .input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .input-row input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 13px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+  }
+
+  .input-row input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(74,158,255,0.1);
+  }
+
+  .input-row .unit {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 40px;
+    text-align: right;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 16px 0;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .btn-calc {
+    width: 100%;
+    padding: 12px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn-calc:hover { background: #3a8eef; }
+  .btn-calc:active { transform: scale(0.98); }
+
+  /* RESULTS PANEL */
+  .panel-results { display: flex; flex-direction: column; gap: 20px; }
+
+  .result-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .result-section-header {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .result-section-header h3 {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .result-section-header .badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(74,158,255,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(74,158,255,0.2);
+  }
+
+  .result-grid {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .result-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .result-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    border-radius: 3px 0 0 3px;
+  }
+
+  .result-card.warn::before { background: var(--accent2); }
+  .result-card.ok::before { background: var(--green); }
+
+  .result-card .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  .result-card .value {
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .result-card .unit {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  .result-card .sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent2);
+    margin-top: 4px;
+  }
+
+  .formula-block {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 14px 16px;
+    margin: 0 20px 20px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .formula-block .eq {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .formula-block .val {
+    color: #fff;
+  }
+
+  .formula-block .comment {
+    color: var(--green);
+    font-size: 11px;
+  }
+
+  .selection-box {
+    margin: 0 20px 20px;
+    background: rgba(240,165,0,0.05);
+    border: 1px solid rgba(240,165,0,0.2);
+    border-radius: 7px;
+    padding: 14px 16px;
+  }
+
+  .selection-box .title {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent2);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .selection-box .selected {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .warn-box {
+    margin: 0 20px 20px;
+    background: rgba(255,95,95,0.05);
+    border: 1px solid rgba(255,95,95,0.2);
+    border-radius: 7px;
+    padding: 12px 16px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: #ff9999;
+  }
+
+  .empty-state {
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+
+  .empty-state .icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    opacity: 0.3;
+  }
+
+  @media (max-width: 900px) {
+    .container {
+      grid-template-columns: 1fr;
+    }
+    .panel-inputs {
+      position: static;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">EL</div>
+  <div>
+    <h1>ELEVADOR DE CANECAS</h1>
+    <span>Cálculo de Dimensionamento — Mistura 90</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- INPUTS -->
+  <div class="panel-inputs">
+    <div class="panel-header">
+      <div class="dot"></div>
+      <h2>Parâmetros de Entrada</h2>
+    </div>
+    <div class="panel-body">
+
+      <div class="section-label">Caneca</div>
+
+      <div class="input-group">
+        <label>V — Volume da caneca a 75% <span>[tabela]</span></label>
+        <div class="input-row">
+          <input type="number" id="V" value="11.99" step="0.01">
+          <span class="unit">L</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>n — Número de fileiras</label>
+        <div class="input-row">
+          <input type="number" id="n" value="1" step="1" min="1">
+          <span class="unit">und</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>e — Passo das canecas</label>
+        <div class="input-row">
+          <input type="number" id="e" value="310" step="1">
+          <span class="unit">mm</span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Correia / Tambor</div>
+
+      <div class="input-group">
+        <label>v — Velocidade da correia</label>
+        <div class="input-row">
+          <input type="number" id="v" value="5.0" step="0.1">
+          <span class="unit">m/s</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>D — Diâmetro do tambor motriz</label>
+        <div class="input-row">
+          <input type="number" id="D" value="0.62" step="0.01">
+          <span class="unit">m</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>H — Altura centro a centro</label>
+        <div class="input-row">
+          <input type="number" id="H" value="10" step="0.5">
+          <span class="unit">m</span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Material</div>
+
+      <div class="input-group">
+        <label>γ — Peso específico</label>
+        <div class="input-row">
+          <input type="number" id="gamma" value="1.11" step="0.01">
+          <span class="unit">t/m³</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>CF1 — Coef. enchimento (≤ 1,0)</label>
+        <div class="input-row">
+          <input type="number" id="CF1" value="0.754" step="0.01" min="0" max="1">
+          <span class="unit">adm</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>CF2 — Coef. homogeneidade</label>
+        <div class="input-row">
+          <input type="number" id="CF2" value="1.0" step="0.05" min="0.75" max="1">
+          <span class="unit">adm</span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Correia / Motor</div>
+
+      <div class="input-group">
+        <label>Tu — Tensão admissível unitária da lona</label>
+        <div class="input-row">
+          <input type="number" id="Tu" value="33" step="1">
+          <span class="unit">kgf/cm</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>B — Largura da correia</label>
+        <div class="input-row">
+          <input type="number" id="B" value="55.88" step="0.01">
+          <span class="unit">cm</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>pc — Peso da correia</label>
+        <div class="input-row">
+          <input type="number" id="pc" value="11.5939824" step="0.01">
+          <span class="unit">kg/m</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>p — Peso de uma caneca</label>
+        <div class="input-row">
+          <input type="number" id="p" value="16.13556" step="0.01">
+          <span class="unit">kg</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>η — Rendimento do grupo motor</label>
+        <div class="input-row">
+          <input type="number" id="eta" value="0.95" step="0.01" min="0.5" max="1">
+          <span class="unit">adm</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Rm — Rotação do motor</label>
+        <div class="input-row">
+          <input type="number" id="Rm" value="1750" step="1">
+          <span class="unit">rpm</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>k — Fator de acionamento</label>
+        <div class="input-row">
+          <input type="number" id="k" value="0.85" step="0.05">
+          <span class="unit">adm</span>
+        </div>
+      </div>
+
+      <button class="btn-calc" onclick="calcular()">▶ CALCULAR</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="panel-results" id="results">
+    <div class="result-section">
+      <div class="result-section-header">
+        <h3>Aguardando cálculo</h3>
+      </div>
+      <div class="empty-state">
+        <div class="icon">⚙</div>
+        Preencha os parâmetros e clique em Calcular
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function g(id) { return parseFloat(document.getElementById(id).value) || 0; }
+
+function fmt(v, decimals=2) {
+  if (isNaN(v) || !isFinite(v)) return '—';
+  return v.toFixed(decimals);
+}
+
+function calcular() {
+  const V    = g('V');
+  const n    = g('n');
+  const e    = g('e');
+  const v    = g('v');
+  const D    = g('D');
+  const H    = g('H');
+  const gamma= g('gamma');
+  const CF1  = g('CF1');
+  const CF2  = g('CF2');
+  const Tu   = g('Tu');
+  const B    = g('B');
+  const pc   = g('pc');
+  const p    = g('p');
+  const eta  = g('eta');
+  const Rm   = g('Rm');
+  const k    = g('k');
+
+  // 1. Capacidade
+  const Q_m3h = 3600 * V * n * v * CF1 * CF2 / e;
+  const Q_th  = Q_m3h * gamma;
+
+  // 2. Comprimento da correia aberta
+  const Pi = Math.PI;
+  const Ca = Pi * D + 2 * H;
+
+  // 3. Número de canecas
+  const N1 = 1000 * Ca * n / e;
+
+  // 4. Peso por metro de material
+  const V100 = V / 0.75; // volume a 100%
+  const Pm = 1000 * n * gamma * V100 / e;
+  const p1 = V100 * gamma; // peso material na caneca a 100% (kg), V em L → /1000 → * 1000 = mesmo
+
+  // 4. Tensão estática
+  const Tp = (p * N1 / 2.0) + (pc * Ca / 4.0) + (p1 * N1 / 2.0);
+
+  // 5. Tensão efetiva
+  const Ho = 7.0; // centrífugo
+  const Te_a = (H + 12 * D * D) * p1 / e * 1000; // aproximação fórmula (a)
+  const Te_b = 0.8 * p1 * N1 * (H + Ho) / H;
+  const Te = Math.max(Te_a, Te_b);
+
+  // 6. Tensão máxima
+  const Tm = (1 + k) * Te;
+
+  // 7. Fator de abraçamento
+  const mu  = 0.35;
+  const phi = 180.0;
+  const exp_val = Math.exp(0.0174 * phi * mu);
+  const K = 1 / (exp_val - 1);
+
+  // 8. Peso do esticador
+  const Pe = K * Te;
+
+  // 3.1 Número de lonas
+  const Ut = Tm / B;
+  const Nm = Ut / Tu;
+  const NL = Math.max(4, Math.ceil(Nm));
+  const pctTad = (Tm / (Tu * B * NL)) * 100;
+
+  // 5.1 Potência
+  const Pm_pot = 1000 * n * gamma * (V / 0.75) / e; // reusa
+  const N_cv = v * Pm * n * (H + 7 * D) / (75 * eta);
+  const N_kw = N_cv * 0.7355;
+
+  // 5.2 Redução
+  const rs = v * 60 / (D * Pi);
+  const R  = Rm / rs;
+
+  // 5.3 Acoplamento de alta
+  const C_const = 7030;
+  const Fs_ac = 1.5;
+  const N_sel = Math.ceil(N_cv / 2.5) * 2.5;
+  const Meq_alta = C_const * N_sel * Fs_ac / Rm;
+
+  // Rolamentos
+  const L10h = 50000;
+  const n_rot = rs;
+  const P_rol_mot = (Tm + 120) / 2 * 9.81; // N
+  const C_rol_mot = P_rol_mot * Math.pow((60 * n_rot * L10h) / 1e6, 1/3);
+
+  // HTML
+  const html = `
+  <div class="result-section">
+    <div class="result-section-header">
+      <h3>1 — CAPACIDADE</h3>
+      <span class="badge">RESULTADO</span>
+    </div>
+    <div class="result-grid">
+      <div class="result-card ok">
+        <div class="label">Q — Capacidade</div>
+        <div class="value">${fmt(Q_m3h, 1)}</div>
+        <div class="unit">m³/h</div>
+      </div>
+      <div class="result-card ok">
+        <div class="label">Q — Capacidade</div>
+        <div class="value">${fmt(Q_th, 1)}</div>
+        <div class="unit">t/h</div>
+      </div>
+    </div>
+    <div class="formula-block">
+      <span class="comment">// Q = 3600 · V · n · v · CF1 · CF2 · γ / e</span><br>
+      Q = 3600 × <span class="val">${V}</span> × <span class="val">${n}</span> × <span class="val">${v}</span> × <span class="val">${CF1}</span> × <span class="val">${CF2}</span> / <span class="val">${e}</span> × <span class="val">${gamma}</span><br>
+      <span class="eq">= ${fmt(Q_m3h,2)} m³/h → ${fmt(Q_th,2)} t/h</span>
+    </div>
+  </div>
+
+  <div class="result-section">
+    <div class="result-section-header">
+      <h3>2 — GEOMETRIA DA CORREIA</h3>
+    </div>
+    <div class="result-grid">
+      <div class="result-card">
+        <div class="label">Ca — Correia aberta</div>
+        <div class="value">${fmt(Ca, 3)}</div>
+        <div class="unit">m</div>
+      </div>
+      <div class="result-card">
+        <div class="label">N1 — Nº de canecas</div>
+        <div class="value">${fmt(N1, 1)}</div>
+        <div class="unit">und</div>
+        <div class="sub">≈ ${Math.ceil(N1)} canecas</div>
+      </div>
+      <div class="result-card">
+        <div class="label">Pm — Peso/metro material</div>
+        <div class="value">${fmt(Pm, 2)}</div>
+        <div class="unit">kg/m</div>
+      </div>
+    </div>
+    <div class="formula-block">
+      Ca = π·D + 2H = π×${D} + 2×${H} = <span class="eq">${fmt(Ca,3)} m</span><br>
+      N1 = 1000·Ca·n/e = <span class="eq">${fmt(N1,2)} und</span>
+    </div>
+  </div>
+
+  <div class="result-section">
+    <div class="result-section-header">
+      <h3>3 — TENSÕES</h3>
+    </div>
+    <div class="result-grid">
+      <div class="result-card">
+        <div class="label">Tp — Tensão estática</div>
+        <div class="value">${fmt(Tp, 0)}</div>
+        <div class="unit">kgf</div>
+      </div>
+      <div class="result-card">
+        <div class="label">Te — Tensão efetiva (b)</div>
+        <div class="value">${fmt(Te_b, 0)}</div>
+        <div class="unit">kgf</div>
+        <div class="sub">adotado (maior valor)</div>
+      </div>
+      <div class="result-card warn">
+        <div class="label">Tm — Tensão máxima</div>
+        <div class="value">${fmt(Tm, 0)}</div>
+        <div class="unit">kgf</div>
+      </div>
+      <div class="result-card">
+        <div class="label">Pe — Peso do esticador</div>
+        <div class="value">${fmt(Pe, 1)}</div>
+        <div class="unit">kgf</div>
+      </div>
+    </div>
+    <div class="formula-block">
+      <span class="comment">// Tp = p·N1/2 + pc·Ca/4 + p1·N1/2</span><br>
+      Tp = ${fmt(p,3)}×${fmt(N1,1)}/2 + ${fmt(pc,3)}×${fmt(Ca,3)}/4 + ${fmt(p1,3)}×${fmt(N1,1)}/2 = <span class="eq">${fmt(Tp,1)} kgf</span><br><br>
+      <span class="comment">// Te(b) = 0,8·p1·N·(H + Ho) / H   |   Ho = 7 m (centrífugo)</span><br>
+      Te(b) = 0,8 × ${fmt(p1,3)} × ${fmt(N1,1)} × (${H} + 7) / ${H} = <span class="eq">${fmt(Te_b,1)} kgf</span><br><br>
+      Tm = (1 + ${k}) × ${fmt(Te,1)} = <span class="eq">${fmt(Tm,1)} kgf</span>
+    </div>
+  </div>
+
+  <div class="result-section">
+    <div class="result-section-header">
+      <h3>4 — SELEÇÃO DA CORREIA</h3>
+    </div>
+    <div class="result-grid">
+      <div class="result-card">
+        <div class="label">Ut — Unidade de tensão</div>
+        <div class="value">${fmt(Ut, 2)}</div>
+        <div class="unit">kgf/cm</div>
+      </div>
+      <div class="result-card">
+        <div class="label">Nm — Lonas mínimas</div>
+        <div class="value">${fmt(Nm, 2)}</div>
+        <div class="unit">lonas</div>
+      </div>
+      <div class="result-card ok">
+        <div class="label">NL — Lonas selecionadas</div>
+        <div class="value">${NL}</div>
+        <div class="unit">lonas</div>
+      </div>
+      <div class="result-card ${pctTad > 75 ? 'warn' : 'ok'}">
+        <div class="label">%Tad — % da admissível</div>
+        <div class="value">${fmt(pctTad, 1)}</div>
+        <div class="unit">%</div>
+        <div class="sub">${pctTad > 75 ? '⚠ acima de 75%' : '✓ dentro do limite'}</div>
+      </div>
+    </div>
+    ${pctTad > 75 ? `<div class="warn-box">⚠ %Tad = ${fmt(pctTad,1)}% — Acima do limite máximo de 75%. Rever seleção da correia ou número de lonas.</div>` : ''}
+    <div class="selection-box">
+      <div class="title">Correia Selecionada</div>
+      <div class="selected">CORREIA ELEVADORA ${NL}PN${Math.round(Tu*100/33)*1000 > 2000 ? '3000' : '2000'}, REVEST. 1/8"×1/8" — ${NL} LONAS</div>
+    </div>
+  </div>
+
+  <div class="result-section">
+    <div class="result-section-header">
+      <h3>5 — POTÊNCIA E REDUÇÃO</h3>
+    </div>
+    <div class="result-grid">
+      <div class="result-card ok">
+        <div class="label">N — Potência calculada</div>
+        <div class="value">${fmt(N_cv, 2)}</div>
+        <div class="unit">cv</div>
+      </div>
+      <div class="result-card ok">
+        <div class="label">N — Potência (kW)</div>
+        <div class="value">${fmt(N_kw, 2)}</div>
+        <div class="unit">kW</div>
+      </div>
+      <div class="result-card">
+        <div class="label">rs — Rotação de saída</div>
+        <div class="value">${fmt(rs, 2)}</div>
+        <div class="unit">rpm</div>
+      </div>
+      <div class="result-card warn">
+        <div class="label">R — Redução do redutor</div>
+        <div class="value">1 : ${fmt(R, 1)}</div>
+        <div class="unit">adm</div>
+      </div>
+    </div>
+    <div class="formula-block">
+      <span class="comment">// N = v·Pm·n·(H + 7·D) / (75·η)</span><br>
+      N = ${v}×${fmt(Pm,2)}×${n}×(${H} + 7×${D}) / (75×${eta}) = <span class="eq">${fmt(N_cv,2)} cv = ${fmt(N_kw,2)} kW</span><br><br>
+      rs = v×60 / (D×π) = ${v}×60 / (${D}×π) = <span class="eq">${fmt(rs,2)} rpm</span><br>
+      R = Rm / rs = ${Rm} / ${fmt(rs,2)} = <span class="eq">1 : ${fmt(R,1)}</span>
+    </div>
+    <div class="selection-box">
+      <div class="title">Motorredutor Selecionado</div>
+      <div class="selected">MOTORREDUTOR 1:${fmt(R,0)} — ${fmt(N_kw,1)} kW, 4P, 60Hz, IP65</div>
+    </div>
+  </div>
+
+  <div class="result-section">
+    <div class="result-section-header">
+      <h3>6 — ROLAMENTOS (Vida ISO)</h3>
+    </div>
+    <div class="result-grid">
+      <div class="result-card">
+        <div class="label">L10h — Vida nominal</div>
+        <div class="value">${L10h.toLocaleString()}</div>
+        <div class="unit">horas</div>
+      </div>
+      <div class="result-card">
+        <div class="label">C — Cap. carga (eixo motriz)</div>
+        <div class="value">${fmt(C_rol_mot/1000, 1)}</div>
+        <div class="unit">kN</div>
+      </div>
+    </div>
+    <div class="formula-block">
+      <span class="comment">// C = P · ∛(60·n·L10h / 1.000.000)</span><br>
+      P = ${fmt(P_rol_mot/1000,2)} kN  |  n = ${fmt(n_rot,2)} rpm<br>
+      C = <span class="eq">${fmt(C_rol_mot/1000,2)} kN</span>
+    </div>
+  </div>
+  `;
+
+  document.getElementById('results').innerHTML = html;
+}
+
+// Calcular na carga
+window.addEventListener('DOMContentLoaded', calcular);
+</script>
+</body>
+</html>
