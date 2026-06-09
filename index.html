@@ -1,0 +1,1973 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>i9 TMG — Elevador de Canecas · Mistura 90</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & TOKENS ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* ── Fundos ── */
+  --bg:      #f4f5f7;
+  --bg2:     #ffffff;
+  --surf:    #ffffff;
+  --surf2:   #f0f2f5;
+  --border:  #e2e5ea;
+  --border2: #cdd1d9;
+
+  /* ── Marca i9 TMG ── */
+  --orange:  #e85d04;
+  --orange2: #c94e00;
+
+  /* ── Técnico / Status ── */
+  --hi:      #1a2540;
+  --green:   #136b40;
+  --warn:    #8a5c00;
+
+  /* ── Texto ── */
+  --muted:   #9aa0ac;
+  --muted2:  #606878;
+  --text:    #1a1f2e;
+  --white:   #0a0d14;
+
+  --font:    'IBM Plex Sans', sans-serif;
+  --cond:    'IBM Plex Sans Condensed', sans-serif;
+  --mono:    'IBM Plex Mono', monospace;
+  --radius:  7px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100dvh;
+}
+
+/* ── HEADER ── */
+header {
+  background: #13161e;
+  border-bottom: 2px solid var(--orange);
+  padding: 0 20px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  gap: 12px;
+}
+.brand { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 0; }
+.logo { height: 36px; width: auto; flex-shrink: 0; }
+.brand-text { display: flex; flex-direction: column; min-width: 0; }
+.brand-name {
+  font-family: var(--cond);
+  font-size: clamp(13px, 3.5vw, 17px);
+  font-weight: 700;
+  color: #e8edf5;
+  letter-spacing: 0.3px;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.brand-sub {
+  font-size: clamp(9px, 2vw, 10px);
+  color: #556070;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  font-family: var(--mono);
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.header-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+  background: var(--orange);
+  border: none;
+  padding: 5px 13px;
+  border-radius: 4px;
+  letter-spacing: 2px;
+  white-space: nowrap;
+  box-shadow: 0 1px 6px rgba(232,93,4,0.4);
+}
+
+/* ── BTN PDF ── */
+.btn-pdf {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--orange);
+  border: 1px solid var(--orange);
+  color: #ffffff;
+  font-family: var(--cond);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 7px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 2px 8px rgba(232,93,4,0.35);
+}
+.btn-pdf:hover {
+  background: var(--orange2);
+  border-color: var(--orange2);
+  box-shadow: 0 3px 12px rgba(232,93,4,0.5);
+}
+.btn-pdf:active { transform: scale(0.97); }
+.btn-pdf svg { flex-shrink: 0; }
+#btnPdf { display: none; }
+#btnPdf.visible { display: flex; }
+
+/* ── BTN ACESSIBILIDADE ── */
+.btn-a11y {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: 1px solid #3a4155;
+  color: #b0bac8;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.btn-a11y:hover { border-color: var(--orange); color: var(--orange); }
+.btn-a11y:active { transform: scale(0.96); }
+.btn-a11y .a11y-level {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #2a2f3e;
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-size: 10px;
+  min-width: 18px;
+  color: #e8edf5;
+  transition: background 0.15s;
+}
+body.font-lg .btn-a11y .a11y-level,
+body.font-xl .btn-a11y .a11y-level { background: var(--orange); color: #fff; }
+
+/* ── FONT SCALE ── */
+body.font-lg { font-size: 17px; }
+body.font-xl { font-size: 20px; }
+
+body.font-lg .param-sym   { font-size: 14px; }
+body.font-lg .param-entry { font-size: 15px; }
+body.font-lg .param-unit  { font-size: 12px; }
+body.font-lg .param-desc  { font-size: 12px; }
+body.font-lg .rc-value    { font-size: 18px; }
+body.font-lg .rc-label    { font-size: 13px; }
+body.font-lg .rc-formula  { font-size: 12px; }
+body.font-lg .rc-select   { font-size: 13px; }
+body.font-lg .rc-title    { font-size: 13px; }
+body.font-lg .btn-calc    { font-size: 15px; }
+body.font-lg .section-label { font-size: 17px; }
+
+body.font-xl .param-sym   { font-size: 16px; }
+body.font-xl .param-entry { font-size: 17px; }
+body.font-xl .param-unit  { font-size: 14px; }
+body.font-xl .param-desc  { font-size: 14px; }
+body.font-xl .rc-value    { font-size: 21px; }
+body.font-xl .rc-label    { font-size: 15px; }
+body.font-xl .rc-formula  { font-size: 14px; }
+body.font-xl .rc-select   { font-size: 15px; }
+body.font-xl .rc-title    { font-size: 15px; }
+body.font-xl .btn-calc    { font-size: 17px; }
+body.font-xl .section-label { font-size: 20px; }
+
+@media (max-width: 640px) {
+  .btn-a11y .a11y-txt { display: none; }
+}
+
+/* ── LAYOUT ── */
+.app-layout {
+  display: grid;
+  grid-template-columns: 295px 1fr;
+  gap: 0;
+  min-height: calc(100dvh - 63px);
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  background: #fafbfc;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 63px;
+  height: calc(100dvh - 63px);
+  overflow: hidden;
+}
+.sidebar-head {
+  background: var(--bg2);
+  border-top: 2px solid var(--orange);
+  padding: 10px 16px;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #404855;
+}
+.sidebar-scroll {
+  overflow-y: auto;
+  flex: 1;
+  padding: 10px 10px 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border2) transparent;
+}
+.sidebar-scroll::-webkit-scrollbar { width: 4px; }
+.sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+.sidebar-scroll::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+/* ── PARAM SECTIONS ── */
+.param-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 6px 6px;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+.param-section::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── INPUT ROWS ── */
+.param-row {
+  display: grid;
+  grid-template-columns: 44px 1fr 60px;
+  align-items: center;
+  gap: 2px 6px;
+  padding: 4px 6px;
+  border-radius: 5px;
+  transition: background 0.15s;
+}
+.param-row:hover { background: rgba(232,93,4,0.04); }
+.param-sym {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a1f2e;
+}
+.param-entry {
+  background: #ffffff;
+  color: var(--white);
+  font-family: var(--mono);
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 6px 8px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  -webkit-appearance: none;
+}
+.param-entry:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 2px rgba(232,93,4,0.12);
+}
+.param-unit {
+  font-size: 10px;
+  color: #606878;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--mono);
+}
+.param-desc {
+  grid-column: 2 / -1;
+  font-size: 10px;
+  color: var(--muted);
+  font-family: var(--font);
+  padding: 0 2px 3px;
+  line-height: 1.3;
+}
+
+/* ── CALC BUTTON ── */
+.btn-calc {
+  margin: 14px 10px 14px;
+  padding: 12px;
+  background: var(--orange);
+  color: var(--white);
+  font-family: var(--cond);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  width: calc(100% - 20px);
+  transition: background 0.15s, transform 0.1s;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-calc:hover { background: var(--orange2); }
+.btn-calc:active { transform: scale(0.98); }
+
+/* ── MAIN CONTENT ── */
+.main-content {
+  padding: 28px 24px 60px;
+  min-width: 0;
+}
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-family: var(--cond);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #1a1f2e;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+}
+
+/* ── PLACEHOLDER ── */
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 80px 20px;
+  color: var(--muted);
+  text-align: center;
+}
+.placeholder-icon {
+  font-size: 44px;
+  opacity: 0.18;
+  line-height: 1;
+}
+.placeholder p {
+  font-family: var(--cond);
+  font-size: 12px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  max-width: 260px;
+  line-height: 2;
+  color: var(--muted);
+}
+
+/* ── RESULTS GRID ── */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px;
+}
+
+/* Linha 1: Capacidade(3) + Geometria(3) + Tensões(3) + Seleção Correia(3) */
+.results-grid .result-card:nth-child(1) { grid-column: span 3; }
+.results-grid .result-card:nth-child(2) { grid-column: span 3; }
+.results-grid .result-card:nth-child(3) { grid-column: span 3; }
+.results-grid .result-card:nth-child(4) { grid-column: span 3; }
+
+/* Linha 2: Potência(4) + Rolamentos(4) + Acoplamentos(4) */
+.results-grid .result-card:nth-child(5) { grid-column: span 4; }
+.results-grid .result-card:nth-child(6) { grid-column: span 4; }
+.results-grid .result-card:nth-child(7) { grid-column: span 4; }
+
+/* Linha 3: Eixos(5) + Resumo(7) */
+.results-grid .result-card:nth-child(8) { grid-column: span 5; }
+.results-grid .result-card:nth-child(9) { grid-column: span 7; }
+
+/* ── RESULT CARD ── */
+.result-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border-top: 2px solid var(--border2);
+  position: relative;
+  animation: fadeUp 0.3s ease both;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.result-card:nth-child(1) { animation-delay: 0.04s; }
+.result-card:nth-child(2) { animation-delay: 0.08s; }
+.result-card:nth-child(3) { animation-delay: 0.12s; }
+.result-card:nth-child(4) { animation-delay: 0.16s; }
+.result-card:nth-child(5) { animation-delay: 0.20s; }
+.result-card:nth-child(6) { animation-delay: 0.24s; }
+
+.accent-blue   { border-top-color: var(--orange); }
+.accent-teal   { border-top-color: var(--muted2); }
+.accent-green  { border-top-color: var(--green); }
+.accent-orange { border-top-color: var(--orange); background: linear-gradient(to bottom, #fff8f4 0%, #ffffff 60px); }
+
+/* Card Resumo destaque */
+.result-card.accent-orange .rc-title {
+  background: rgba(232,93,4,0.06);
+  color: var(--orange2);
+  border-bottom-color: rgba(232,93,4,0.15);
+}
+.result-card.accent-orange .rc-rows,
+.rc-rows-bom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 16px;
+  padding: 10px 16px 4px;
+}
+.rc-rows-bom .rc-row,
+.result-card.accent-orange .rc-row {
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  padding: 4px 0;
+}
+.rc-rows-bom .rc-row:last-child,
+.result-card.accent-orange .rc-row:last-child { border-bottom: none; }
+
+.rc-num {
+  position: absolute;
+  top: 10px;
+  right: 13px;
+  font-family: var(--mono);
+  font-size: 26px;
+  font-weight: 600;
+  color: #e8eaee;
+  line-height: 1;
+  pointer-events: none;
+}
+.rc-title {
+  font-family: var(--cond);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: #404855;
+  padding: 13px 16px 9px;
+  border-bottom: 1px solid var(--border);
+  background: #f8f9fb;
+}
+.rc-rows { padding: 10px 16px 0; }
+.rc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  gap: 8px;
+}
+.rc-row:last-child { border-bottom: none; }
+.rc-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: #505a6a;
+  min-width: 52px;
+  flex-shrink: 0;
+}
+.rc-value {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 600;
+  color: #0a0d14;
+  text-align: right;
+}
+.rc-value em {
+  font-style: normal;
+  font-size: 10px;
+  color: var(--muted);
+  margin-left: 3px;
+  font-family: var(--mono);
+}
+.rc-value small { font-size: 10px; margin-left: 6px; font-family: var(--cond); letter-spacing: 0.5px; }
+.rc-value.hi  { color: var(--hi); }
+.rc-value.ok  { color: var(--green); }
+.rc-value small.ok-tag   { color: var(--green); }
+.rc-value small.warn-tag { color: var(--warn); }
+.rc-formula {
+  margin: 9px 16px;
+  padding: 7px 10px;
+  background: #f4f5f7;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #505a6a;
+  line-height: 1.7;
+}
+.rc-select {
+  margin: 8px 16px 13px;
+  padding: 8px 11px;
+  background: rgba(232,93,4,0.05);
+  border: 1px solid rgba(232,93,4,0.18);
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #0a0d14;
+  letter-spacing: 0.3px;
+  line-height: 1.5;
+}
+
+/* ── FAB (mobile) ── */
+.fab {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  right: 20px;
+  z-index: 300;
+  background: var(--orange);
+  color: var(--white);
+  border: none;
+  border-radius: 50px;
+  padding: 14px 22px;
+  font-family: var(--cond);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(232,93,4,0.3);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s;
+  align-items: center;
+  gap: 8px;
+}
+.fab:active { transform: scale(0.96); }
+
+/* ── BOTTOM SHEET ── */
+.sheet-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(30,40,60,0.45);
+  z-index: 400;
+  backdrop-filter: blur(3px);
+}
+.sheet-overlay.open { display: block; }
+.bottom-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 500;
+  background: #ffffff;
+  border-radius: 16px 16px 0 0;
+  border-top: 2px solid var(--orange);
+  display: flex;
+  flex-direction: column;
+  max-height: 88dvh;
+  transform: translateY(100%);
+  transition: transform 0.32s cubic-bezier(.32,1,.6,1);
+}
+.bottom-sheet.open { transform: translateY(0); }
+.sheet-handle {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0 4px;
+  flex-shrink: 0;
+}
+.sheet-handle::after {
+  content: '';
+  width: 36px;
+  height: 3px;
+  background: var(--border2);
+  border-radius: 2px;
+}
+.sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 18px 10px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.sheet-header h2 {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted2);
+}
+.sheet-close {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+  -webkit-tap-highlight-color: transparent;
+}
+.sheet-body {
+  overflow-y: auto;
+  flex: 1;
+  padding: 10px 14px 0;
+  scrollbar-width: none;
+}
+.sheet-body::-webkit-scrollbar { display: none; }
+.sheet-footer {
+  padding: 12px 14px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.sheet-footer .btn-calc { margin: 0; width: 100%; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: #fff0f0;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 999;
+  text-align: center;
+  max-width: 90vw;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── FOOTER ── */
+footer {
+  background: #ffffff;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+.footer-logo { color: var(--orange); font-weight: 600; }
+.footer-sep  { color: var(--border2); margin: 0 8px; }
+
+/* ── TABLET ── */
+@media (max-width: 900px) {
+  .app-layout { grid-template-columns: 260px 1fr; }
+  /* No tablet: 2 colunas */
+  .results-grid { grid-template-columns: repeat(2, 1fr); }
+  .results-grid .result-card:nth-child(n) { grid-column: span 1; }
+  .results-grid .result-card:nth-child(8) { grid-column: span 1; }
+  .results-grid .result-card:nth-child(9) { grid-column: span 2; }
+}
+
+/* ── MOBILE ── */
+@media (max-width: 640px) {
+  .app-layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .fab { display: flex; }
+  .main-content { padding: 20px 14px 100px; }
+  .results-grid { grid-template-columns: 1fr; gap: 14px; }
+  .results-grid .result-card:nth-child(n) { grid-column: span 1 !important; }
+  .result-card.accent-orange .rc-rows,
+  .rc-rows-bom { grid-template-columns: 1fr; }
+  header { height: 54px; }
+  .brand-sub { display: none; }
+  #btnPdf { display: none !important; }
+}
+
+/* ══════════════════════════════════════
+   PRINT / PDF
+══════════════════════════════════════ */
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+  :root {
+    --bg:      #ffffff;
+    --bg2:     #f4f6f9;
+    --surf:    #ffffff;
+    --surf2:   #f0f3f8;
+    --border:  #d0d8e8;
+    --border2: #b8c6dc;
+    --accent:  #1a4fa0;
+    --accent2: #2563b8;
+    --teal:    #0a7a7a;
+    --green:   #0e6b3d;
+    --gold:    #8a6400;
+    --muted:   #6a7d96;
+    --muted2:  #4a6080;
+    --text:    #2a3a50;
+    --white:   #111827;
+  }
+
+  body {
+    background: #fff;
+    color: #111827;
+    font-size: 11px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  header, footer, .sidebar, .fab, .sheet-overlay,
+  .bottom-sheet, .toast, .btn-pdf, #btnPdf,
+  .placeholder { display: none !important; }
+
+  .app-layout { display: block; }
+  .main-content { padding: 0; }
+
+  /* ── PDF COVER ── */
+  .pdf-cover {
+    display: flex !important;
+    flex-direction: column;
+    page-break-after: always;
+    height: 100vh;
+    padding: 60px 60px 50px;
+    background: #f4f6f9;
+    border-left: 6px solid #1a4fa0;
+    justify-content: space-between;
+  }
+  .pdf-cover-top { display: flex; flex-direction: column; gap: 40px; }
+  .pdf-cover-logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .pdf-cover-logo svg { width: 60px; height: 30px; }
+  .pdf-cover-company {
+    font-family: var(--cond);
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a4fa0;
+    letter-spacing: 1px;
+  }
+  .pdf-cover-divider {
+    width: 60px;
+    height: 3px;
+    background: #1a4fa0;
+    margin: 4px 0 0;
+  }
+  .pdf-cover-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0c1c38;
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+  .pdf-cover-subtitle {
+    font-size: 14px;
+    color: #5a7090;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .pdf-cover-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 32px;
+    padding: 28px 0;
+    border-top: 1px solid #c8d4e4;
+    border-bottom: 1px solid #c8d4e4;
+  }
+  .pdf-meta-item {}
+  .pdf-meta-key {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #8a9ab0;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .pdf-meta-val {
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a2840;
+  }
+  .pdf-cover-bottom {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #8a9ab0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ── SECTION LABEL PRINT ── */
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace !important;
+    font-size: 9px !important;
+    color: #1a4fa0 !important;
+    margin: 0 0 14px !important;
+    letter-spacing: 2px !important;
+    border-bottom: 1px solid #c8d4e4;
+    padding-bottom: 6px;
+  }
+  .section-label::after { background: #c8d4e4 !important; }
+
+  /* ── RESULTS GRID PRINT ── */
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  .result-card {
+    animation: none !important;
+    border: 1px solid #c8d4e4;
+    border-top-width: 3px;
+    border-radius: 5px;
+    background: #fff;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    box-shadow: none;
+  }
+  .accent-blue  { border-top-color: #1a4fa0 !important; }
+  .accent-teal  { border-top-color: #0a7a7a !important; }
+  .accent-green { border-top-color: #0e6b3d !important; }
+
+  .rc-title {
+    background: #f4f6f9 !important;
+    color: #4a6080 !important;
+    border-bottom: 1px solid #d0d8e8 !important;
+    font-size: 9px !important;
+    padding: 9px 12px 7px !important;
+  }
+  .rc-num { color: #d8e0ec !important; font-size: 22px !important; top: 8px !important; right: 10px !important; }
+  .rc-rows { padding: 8px 12px 0 !important; }
+  .rc-row { padding: 4px 0 !important; border-bottom: 1px solid #eaeff6 !important; }
+  .rc-label { color: #6a7d96 !important; font-size: 9.5px !important; min-width: 44px !important; }
+  .rc-value { font-size: 13px !important; color: #111827 !important; }
+  .rc-value em { color: #8a9ab0 !important; font-size: 9px !important; }
+  .rc-value.hi { color: #1a4fa0 !important; }
+  .rc-value.ok { color: #0e6b3d !important; }
+  .rc-value small.ok-tag   { color: #0e6b3d !important; }
+  .rc-value small.warn-tag { color: #8a6400 !important; }
+  .rc-formula {
+    margin: 7px 12px !important;
+    padding: 5px 8px !important;
+    background: #f4f6f9 !important;
+    border: 1px solid #d0d8e8 !important;
+    font-size: 8.5px !important;
+    color: #6a7d96 !important;
+    border-radius: 3px !important;
+  }
+  .rc-select {
+    margin: 6px 12px 10px !important;
+    padding: 6px 8px !important;
+    background: rgba(26,79,160,0.05) !important;
+    border: 1px solid rgba(26,79,160,0.2) !important;
+    font-size: 9px !important;
+    color: #0c1c38 !important;
+    border-radius: 3px !important;
+  }
+
+  /* ── PDF FOOTER ── */
+  .pdf-page-footer {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+    padding-top: 10px;
+    border-top: 1px solid #c8d4e4;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    color: #8a9ab0;
+    letter-spacing: 1px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 90 44" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="9" cy="7" r="6" fill="#e85d04"/>
+      <rect x="6" y="15" width="6" height="22" rx="2.5" fill="#dde6f2"/>
+      <text x="21" y="37" font-family="IBM Plex Sans Condensed" font-weight="700" font-size="34" fill="#dde6f2">9</text>
+      <text x="56" y="22" font-family="IBM Plex Sans Condensed" font-weight="700" font-size="12" fill="#e85d04" letter-spacing="2">TMG</text>
+    </svg>
+    <div class="brand-text">
+      <span class="brand-name">Elevador de Canecas</span>
+      <span class="brand-sub">Memorial de Cálculo · Mistura 90</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <button class="btn-a11y" id="btnFonte" onclick="ciclarFonte()" title="Normal">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      <span class="a11y-txt">Visão</span><span class="a11y-level" id="a11yLevel">1</span>
+    </button>
+    <button class="btn-pdf" id="btnPdf" onclick="exportPDF()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+        <polyline points="10 9 9 9 8 9"/>
+      </svg>
+      Exportar PDF
+    </button>
+    <div class="header-tag">110-EL-001</div>
+  </div>
+</header>
+
+<!-- LAYOUT -->
+<div class="app-layout">
+
+  <!-- SIDEBAR (desktop/tablet) -->
+  <aside class="sidebar">
+    <div class="sidebar-head">▸ Parâmetros de Entrada</div>
+    <div class="sidebar-scroll" id="sidebarScroll"></div>
+    <button class="btn-calc" id="btnCalcDesktop">▶ CALCULAR</button>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content" id="mainContent">
+
+    <!-- PDF COVER (hidden on screen) -->
+    <div class="pdf-cover" id="pdfCover" style="display:none;">
+      <div class="pdf-cover-top">
+        <div class="pdf-cover-logo">
+          <svg viewBox="0 0 90 44" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="9" cy="7" r="6" fill="#1a4fa0"/>
+            <rect x="6" y="15" width="6" height="22" rx="2.5" fill="#1a2840"/>
+            <text x="21" y="37" font-family="IBM Plex Sans Condensed" font-weight="700" font-size="34" fill="#1a2840">9</text>
+            <text x="56" y="22" font-family="IBM Plex Sans Condensed" font-weight="700" font-size="12" fill="#1a4fa0" letter-spacing="2">TMG</text>
+          </svg>
+          <div>
+            <div class="pdf-cover-company">i9 TMG Engenharia</div>
+            <div class="pdf-cover-divider"></div>
+          </div>
+        </div>
+        <div>
+          <div class="pdf-cover-title">Memorial de Cálculo<br>Elevador de Canecas</div>
+          <div class="pdf-cover-subtitle">Mistura 90 · Equipamento 110-EL-001</div>
+        </div>
+        <div class="pdf-cover-meta" id="pdfCoverMeta">
+          <!-- preenchido via JS -->
+        </div>
+      </div>
+      <div class="pdf-cover-bottom">
+        <span>i9 TMG · Engenharia de Equipamentos de Transporte</span>
+        <span id="pdfCoverDate"></span>
+      </div>
+    </div>
+
+    <div class="placeholder" id="placeholder">
+      <div class="placeholder-icon">⊞</div>
+      <p>Preencha os parâmetros e clique em Calcular</p>
+    </div>
+
+    <div id="resultsArea" style="display:none;">
+      <div class="section-label">Resultados — Seleção de Componentes</div>
+      <div class="results-grid" id="resultsGrid"></div>
+      <div class="pdf-page-footer" id="pdfPageFooter" style="display:none;">
+        <span>i9 TMG · Memorial de Cálculo — Elevador de Canecas · 110-EL-001</span>
+        <span id="pdfFooterDate"></span>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">i9 TMG</span>
+  <span class="footer-sep">·</span>
+  Engenharia de Equipamentos de Transporte
+  <span class="footer-sep">·</span>
+  i9tmg.com.br
+</footer>
+
+<!-- FAB (mobile) -->
+<button class="fab" id="fab">⚙ PARÂMETROS</button>
+
+<!-- BOTTOM SHEET (mobile) -->
+<div class="sheet-overlay" id="sheetOverlay"></div>
+<div class="bottom-sheet" id="bottomSheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <h2>▸ Parâmetros de Entrada</h2>
+    <button class="sheet-close" id="sheetClose">✕</button>
+  </div>
+  <div class="sheet-body" id="sheetBody"></div>
+  <div class="sheet-footer">
+    <button class="btn-calc" id="btnCalcMobile">▶ CALCULAR</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════
+   DEFINIÇÃO DOS CAMPOS
+══════════════════════════════════════ */
+const CAMPOS = [
+  { section: 'Caneca' },
+  { sym: 'V',     desc: 'Volume caneca 75% (tabelado — caneca 500mm)', val: 11.99, unit: 'L', readonly: true },
+  { sym: 'n',     desc: 'Nº de fileiras',      val: 1,          unit: 'und' },
+  { sym: 'e',     desc: 'Passo das canecas',   val: 310.0,      unit: 'mm' },
+  { sym: 'p',     desc: 'Peso de uma caneca',  val: 16.13556,   unit: 'kg' },
+  { section: 'Geometria' },
+  { sym: 'v',     desc: 'Velocidade correia',  val: 5.0,        unit: 'm/s' },
+  { sym: 'D',     desc: 'Diâm. tambor motriz', val: 0.62,       unit: 'm' },
+  { sym: 'H',     desc: 'Altura C-C',          val: 10.0,       unit: 'm' },
+  { sym: 'Ho',    desc: 'Altura de saída (fixo: 7 m centrífugo)',  val: 7.0,        unit: 'm', readonly: true },
+  { sym: 'cb',    desc: 'Espessura/lona PN3000 (fixo por norma)',  val: 3.2,        unit: 'mm', readonly: true },
+  { section: 'Material' },
+  { sym: 'gamma', desc: 'Peso específico γ',   val: 1.11,       unit: 't/m³' },
+  { sym: 'CF1',   desc: 'Coef. enchimento',    val: 0.754,      unit: 'adm' },
+  { sym: 'CF2',   desc: 'Coef. homogeneidade (fixo por norma)', val: 1.0, unit: 'adm', readonly: true },
+  { section: 'Correia' },
+  { sym: 'Tu',    desc: 'Tensão adm. lona (tabelado PN3000)',   val: 33.0,       unit: 'kgf/cm', readonly: true },
+  { sym: 'B',     desc: 'Largura correia',     val: 55.88,      unit: 'cm' },
+  { sym: 'k',     desc: 'Fator acionamento (esticador manual revestido)', val: 0.85, unit: 'adm', readonly: true },
+  { section: 'Motor' },
+  { sym: 'gammaN', desc: 'γ projeto (potência)', val: 1.4,      unit: 't/m³' },
+  { sym: 'eta',   desc: 'Rendimento η (tabelado)',  val: 0.96,  unit: 'adm', readonly: true },
+  { sym: 'Rm',    desc: 'Rotação do motor',       val: 1750.0,   unit: 'rpm' },
+];
+
+/* ══════════════════════════════════════
+   CÁLCULO
+══════════════════════════════════════ */
+function calcular(ei) {
+  const PI = Math.PI, r = {};
+  r.Q_m3h  = 3600 * ei.V * ei.n * ei.v * ei.CF1 * ei.CF2 / ei.e;
+  r.Q_th   = r.Q_m3h * ei.gamma;
+  r.V100   = ei.V / 0.75;
+  r.p1     = ei.V * ei.gammaN;          // planilha: V(75%) × γ_projeto
+  r.Pm     = 1000 * ei.n * ei.gammaN * ei.V / ei.e;  // planilha: usa V(75%) × γ_projeto
+  r.Ca     = PI * ei.D + 2 * ei.H;
+  r.N1     = 1000 * r.Ca * ei.n / ei.e;
+  // pc calculado automaticamente após seleção de NL (NL × cb × B/100 × 1,1)
+  // Primeiro passe: estimativa com NL provisório (usa p1 = V × γ_projeto, igual ao cálculo final)
+  const Ut_prev = ((1 + ei.k) * Math.max(
+    (ei.H + 12 * ei.D ** 2) * (ei.V * ei.gammaN) * 1000 / ei.e,
+    0.8 * (ei.V * ei.gammaN) * (1000 * (PI * ei.D + 2 * ei.H) * ei.n / ei.e) * (ei.H + ei.Ho) / ei.H
+  )) / ei.B;
+  const NL_prev = Math.max(4, Math.ceil(Ut_prev / ei.Tu));
+  r.pc = NL_prev * ei.cb * ei.B / 100 * 1.1; // kg/m
+  r.Tp     = (ei.p * r.N1 / 2) + (r.pc * r.Ca / 4) + (r.p1 * r.N1 / 2);
+  r.Te_a   = (ei.H + 12 * ei.D ** 2) * r.p1 * 1000 / ei.e;
+  r.Te_b   = 0.8 * r.p1 * r.N1 * (ei.H + ei.Ho) / ei.H;  // usa Ho da entrada
+  r.Te     = Math.max(r.Te_a, r.Te_b);
+  r.forma  = r.Te_b >= r.Te_a ? 'b' : 'a';
+  // Tm = maior entre (1+k)·Te e Tp — garante que o peso da caneca influencia a tensão máxima
+  r.Tm     = Math.max((1 + ei.k) * r.Te, r.Tp);
+  r.K_ab   = 1 / (Math.exp(0.0174 * 226 * 0.35) - 1);  // θ=226° conforme planilha
+  r.Pe     = r.K_ab * r.Te;
+  r.Ut     = r.Tm / ei.B;
+  r.Nm     = r.Ut / ei.Tu;
+  r.NL     = Math.max(4, Math.ceil(r.Nm));
+  // Recalcular pc final com NL definitivo
+  r.pc = r.NL * ei.cb * ei.B / 100 * 1.1;
+  r.pct_Tad = (r.Tm / (ei.Tu * ei.B * r.NL)) * 100;
+  // Pm para potência usa γ de projeto (gammaN) — conservador, independente do γ do material
+  // Fórmula correta: N = v · Pm · (H + 7D) / (75·η)  — sem multiplicar por n (Pm já inclui n)
+  const Pm_N  = 1000 * ei.n * ei.gammaN * ei.V / ei.e;  // planilha: V(75%) × γ_projeto
+  const N_cv_prev = ei.v * Pm_N * (ei.H + 7 * ei.D) / (75 * ei.eta);  // corrigido: removido ei.n extra
+  r.N_cv     = N_cv_prev;
+  r.N_kw     = r.N_cv * 0.7355;
+  // Potência comercial — série IEC/NEMA completa até 500 cv
+  const CV_COMERCIAL = [1, 1.5, 2, 3, 4, 5, 6, 7.5, 10, 12.5, 15, 20, 25, 30, 40, 50, 60, 75,
+                        100, 125, 150, 175, 200, 250, 300, 350, 400, 450, 500];
+  r.N_cv_sel = CV_COMERCIAL.find(c => c >= r.N_cv) ?? (Math.ceil(r.N_cv / 50) * 50);
+  r.N_kw_sel = r.N_cv_sel * 0.7355;
+  r.rs       = ei.v * 60 / (ei.D * PI);
+  r.R        = ei.Rm / r.rs;
+  const N_sel = Math.ceil(r.N_cv / 2.5) * 2.5;
+  r.Meq      = 7030 * N_sel * 1.5 / ei.Rm;
+  const cbrt = ((60 * r.rs * 50000) / 1e6) ** (1/3);
+  // Mancal motriz: carga = (Tm + T2) / 2 ≈ (Tm + 120) / 2  (T2 = tensão de retorno estimada)
+  r.C_mot_kN = (r.Tm + 120) / 2 * 9.81 * cbrt / 1000;
+  // Mancal movido (pé): carga = tensão total na correia de retorno = Te · K_ab + tensão viva
+  // Conservadorismo: usa Te_b como carga de referência no tambor movido
+  r.C_mov_kN = (r.Te + r.Pe) / 2 * 9.81 * cbrt / 1000;
+  // ── SEÇÃO 4: DIMENSIONAMENTO DOS EIXOS ──────────────────────────────
+  // Eixo motriz (tambor de topo) — conforme planilha seção 4.1
+  //   Carga: P = Tm + Pt  (tensão total = Tm + esforço periférico = Tm + Te)
+  //   Distância: a2 = 16 cm = 160 mm (conforme planilha)
+  const a2_mm   = 160;               // mm — distância do mancal à carga (planilha)
+  const Pt_mot  = r.Te;              // esforço periférico ≈ Te
+  r.Mf_mot   = (r.Tm + Pt_mot) * a2_mm;              // kgf·mm
+  //   Momento torsor: Mt = N_cv × 38 × D(cm) / v  → resultado em kgf·cm × 10 = kgf·mm
+  r.Mt_mot   = r.N_cv * 38 * (ei.D * 100) / ei.v * 10;   // kgf·mm
+  //   Momento equivalente: Mi = √((1,5·Mf)² + Mt²)  — Fsf=1,5 / sem fator extra em Mt
+  r.Mi_mot   = Math.sqrt((1.5 * r.Mf_mot) ** 2 + r.Mt_mot ** 2);
+  //   Diâmetro mínimo: σadm = 560 kgf/cm² SAE 1045 c/ chaveta (planilha)
+  r.d_mot_mm = ((16 * r.Mi_mot / (Math.PI * 560 * 100)) ** (1/3)) * 10;
+  // Arredonda para bitola comercial (mm)
+  const BITOLAS = [20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,110,120,130,140];
+  r.d_mot_sel = BITOLAS.find(b => b >= r.d_mot_mm) ?? Math.ceil(r.d_mot_mm / 5) * 5;
+
+  // Eixo movido (tambor de pé) — P = Pe (esforço no esticador) conforme planilha seção 4.2
+  r.Mf_mov   = (r.Pe / 2) * a2_mm;
+  r.Mt_mov   = 0;
+  r.Mi_mov   = 1.5 * r.Mf_mov;
+  r.d_mov_mm = ((16 * r.Mi_mov / (Math.PI * 560 * 100)) ** (1/3)) * 10;
+  r.d_mov_sel = BITOLAS.find(b => b >= r.d_mov_mm) ?? Math.ceil(r.d_mov_mm / 5) * 5;
+
+  // ── SEÇÃO 5: ACOPLAMENTOS ────────────────────────────────────────────
+  // Acoplamento de alta velocidade (eixo motor → redutor)
+  //   Torque nominal: Tn_alta = 9550 × kW_sel / Rm  (N·m)
+  r.Tn_alta_Nm  = r.N_kw_sel * 9550 / ei.Rm;
+  //   Torque de projeto: Tp_alta = fator_serviço × Tn  — fs = 2.0 (choque moderado)
+  r.Tp_alta_Nm  = 2.0 * r.Tn_alta_Nm;
+
+  // Acoplamento de baixa velocidade (saída do redutor → eixo motriz)
+  //   Torque nominal: Tn_baixa = 9550 × kW_sel / rs
+  r.Tn_baixa_Nm = r.N_kw_sel * 9550 / r.rs;
+  r.Tp_baixa_Nm = 2.0 * r.Tn_baixa_Nm;
+
+  return r;
+}
+
+/* ══════════════════════════════════════
+   HELPERS
+══════════════════════════════════════ */
+const fmtN = (v, d) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* ══════════════════════════════════════
+   BUILD FORM
+══════════════════════════════════════ */
+function buildForm(container) {
+  const id = container.id;
+  CAMPOS.forEach(c => {
+    if (c.section) {
+      const div = document.createElement('div');
+      div.className = 'param-section';
+      div.textContent = c.section;
+      container.appendChild(div);
+      return;
+    }
+    const row = document.createElement('div');
+    row.className = 'param-row';
+    const sym = document.createElement('span');
+    sym.className = 'param-sym';
+    sym.textContent = c.sym;
+    const inp = document.createElement('input');
+    inp.className = 'param-entry';
+    inp.type = 'number';
+    inp.step = 'any';
+    inp.inputMode = 'decimal';
+    inp.id = `inp_${c.sym}_${id}`;
+    inp.value = c.val;
+    if (c.readonly) {
+      inp.readOnly = true;
+      inp.style.background = '#f0f2f5';
+      inp.style.color = '#9aa0ac';
+      inp.style.cursor = 'default';
+    } else {
+      inp.addEventListener('input', () => {
+        const v = parseFloat(inp.value);
+        if (!isNaN(v)) {
+          c.val = v;
+          // Espelha o valor no outro formulário imediatamente
+          const otherId = id === 'sidebarScroll' ? 'sheetBody' : 'sidebarScroll';
+          const other = document.getElementById(`inp_${c.sym}_${otherId}`);
+          if (other) other.value = inp.value;
+        }
+      });
+    }
+    const unit = document.createElement('span');
+    unit.className = 'param-unit';
+    unit.textContent = c.unit;
+    row.appendChild(sym);
+    row.appendChild(inp);
+    row.appendChild(unit);
+    if (c.desc) {
+      const desc = document.createElement('span');
+      desc.className = 'param-desc';
+      desc.textContent = c.desc;
+      row.appendChild(desc);
+    }
+    container.appendChild(row);
+  });
+}
+
+/* ══════════════════════════════════════
+   READ INPUTS
+══════════════════════════════════════ */
+function readInputs(containerId) {
+  const ei = {};
+  CAMPOS.forEach(c => {
+    if (!c.sym) return;
+    const el = document.getElementById(`inp_${c.sym}_${containerId}`);
+    if (!el) return;
+    const v = parseFloat(el.value);
+    if (isNaN(v)) throw new Error('Valor inválido: ' + c.sym);
+    ei[c.sym] = v;
+  });
+  ei.n = Math.round(ei.n);
+  return ei;
+}
+
+/* ══════════════════════════════════════
+   SYNC FORMS
+══════════════════════════════════════ */
+function syncForms(src, tgt) {
+  CAMPOS.forEach(c => {
+    if (!c.sym) return;
+    const s = document.getElementById(`inp_${c.sym}_${src}`);
+    const t = document.getElementById(`inp_${c.sym}_${tgt}`);
+    if (s && t) t.value = s.value;
+  });
+}
+
+/* ══════════════════════════════════════
+   SHOW RESULTS
+══════════════════════════════════════ */
+let lastEI = null, lastR = null;
+
+function showResults(ei, r) {
+  lastEI = ei; lastR = r;
+  document.getElementById('placeholder').style.display = 'none';
+  const area = document.getElementById('resultsArea');
+  area.style.display = 'block';
+  const grid = document.getElementById('resultsGrid');
+  grid.innerHTML = '';
+
+  const ok  = r.pct_Tad <= 75;
+  const N1c = Math.ceil(r.N1);
+
+  const secoes = [
+    {
+      num: 1, title: 'Capacidade', accent: 'accent-teal',
+      rows: [
+        { label: 'Q', value: fmtN(r.Q_m3h, 2), unit: 'm³/h', cls: '' },
+        { label: 'Q', value: fmtN(r.Q_th,  2), unit: 't/h',  cls: '' },
+      ],
+      formula: 'Q = 3600 · V · n · v · CF1 · CF2 · γ / e',
+    },
+    {
+      num: 2, title: 'Geometria da Correia', accent: 'accent-blue',
+      rows: [
+        { label: 'Ca', value: fmtN(r.Ca, 3), unit: 'm',         cls: '' },
+        { label: 'N1', value: N1c,            unit: 'canecas',   cls: '' },
+        { label: 'Pm', value: fmtN(r.Pm, 2), unit: 'kg/m',      cls: '' },
+        { label: 'p1', value: fmtN(r.p1, 3), unit: 'kg (100%)', cls: '' },
+      ],
+      formula: 'Ca = π·D + 2H   |   N1 = 1000·Ca·n / e   |   p1 = V(75%)·γproj   |   Pm = 1000·n·γproj·V/e',
+    },
+    {
+      num: 3, title: 'Tensões', accent: 'accent-blue',
+      rows: [
+        { label: 'Tp',             value: fmtN(r.Tp, 1), unit: 'kgf', cls: '' },
+        { label: `Te(${r.forma})`, value: fmtN(r.Te, 1), unit: 'kgf', cls: 'hi', tag: 'adotado' },
+        { label: 'Tm',             value: fmtN(r.Tm, 1), unit: 'kgf', cls: 'hi', tag: 'máxima' },
+        { label: 'Pe',             value: fmtN(r.Pe, 1), unit: 'kgf', cls: '' },
+      ],
+      formula: `Tm = (1 + k) · Te = ${fmtN(r.Tm, 1)} kgf   |   Ho = ${fmtN(ei.Ho, 1)} m`,
+    },
+    {
+      num: 4, title: 'Seleção da Correia', accent: 'accent-blue',
+      rows: [
+        { label: 'Ut',   value: fmtN(r.Ut, 2),            unit: 'kgf/cm',    cls: '' },
+        { label: 'Nm',   value: fmtN(r.Nm, 2),            unit: 'lonas mín.', cls: '' },
+        { label: 'NL',   value: r.NL,                     unit: 'lonas',      cls: 'hi', tag: 'selecionado' },
+        { label: 'pc',   value: fmtN(r.pc, 3),             unit: 'kg/m',       cls: '' },
+        { label: '%Tad', value: fmtN(r.pct_Tad, 1) + '%', unit: '',           cls: ok ? 'ok' : 'hi',
+          tag: ok ? '✓ OK' : '⚠ ACIMA 75%', tagCls: ok ? 'ok-tag' : 'warn-tag' },
+      ],
+      select: `CORREIA ELEVADORA ${r.NL}PN3000 · REVEST. 1/8"×1/8" · ${r.NL} LONAS`,
+    },
+    {
+      num: 5, title: 'Potência e Redutor', accent: 'accent-blue',
+      rows: [
+        { label: 'γ proj.',  value: fmtN(ei.gammaN, 2),   unit: 't/m³', cls: '' },
+        { label: 'N calc.',  value: fmtN(r.N_cv, 2),      unit: 'cv',   cls: '' },
+        { label: 'N sel.',   value: fmtN(r.N_cv_sel, 0),  unit: 'cv',   cls: 'hi', tag: 'comercial' },
+        { label: 'N sel.',   value: fmtN(r.N_kw_sel, 2),  unit: 'kW',   cls: '' },
+        { label: 'rs',       value: fmtN(r.rs, 1),         unit: 'rpm',  cls: '' },
+        { label: 'R',        value: `1 : ${fmtN(r.R, 1)}`, unit: '',    cls: '' },
+      ],
+      formula: `N = v · Pm · (H + 7D) / (75 · η)   |   Pm = 1000·n·γproj·V(75%)/e   |   γ proj. = ${fmtN(ei.gammaN, 2)} t/m³`,
+      select: `MOTORREDUTOR 1:${Math.round(r.R)}  ·  ${fmtN(r.N_kw_sel, 1)} kW (${fmtN(r.N_cv_sel, 0)} cv) · 4P · 60Hz · IP65`,
+    },
+    {
+      num: 6, title: 'Rolamentos (L10h = 50 000 h)', accent: 'accent-green',
+      rows: [
+        { label: 'C mot.', value: fmtN(r.C_mot_kN, 2), unit: 'kN',  cls: '' },
+        { label: 'C mov.', value: fmtN(r.C_mov_kN, 2), unit: 'kN',  cls: '' },
+        { label: 'n',      value: fmtN(r.rs, 1),        unit: 'rpm', cls: '' },
+      ],
+      formula: 'C = P · ∛(60·n·L10h / 10⁶)',
+    },
+    {
+      num: 7, title: 'Acoplamentos', accent: 'accent-teal',
+      rows: [
+        { label: 'Tn alta',  value: fmtN(r.Tn_alta_Nm, 1),  unit: 'N·m',  cls: '' },
+        { label: 'Tp alta',  value: fmtN(r.Tp_alta_Nm, 1),  unit: 'N·m',  cls: 'hi', tag: 'fs = 2,0' },
+        { label: 'Tn baixa', value: fmtN(r.Tn_baixa_Nm, 0), unit: 'N·m',  cls: '' },
+        { label: 'Tp baixa', value: fmtN(r.Tp_baixa_Nm, 0), unit: 'N·m',  cls: 'hi', tag: 'fs = 2,0' },
+      ],
+      formula: 'Tn = 9550 · kW / n   |   Tp = fs · Tn   (fs = 2,0 — choque moderado)',
+      select: `ACOPLAMENTO ALTA: Tp ≥ ${fmtN(r.Tp_alta_Nm,0)} N·m @ ${fmtN(ei.Rm,0)} rpm  ·  BAIXA: Tp ≥ ${fmtN(r.Tp_baixa_Nm,0)} N·m @ ${fmtN(r.rs,1)} rpm`,
+    },
+    {
+      num: 8, title: 'Dimensionamento dos Eixos', accent: 'accent-teal',
+      rows: [
+        { label: 'Mf mot.', value: fmtN(r.Mf_mot/1000, 2), unit: 'kgf·m',  cls: '' },
+        { label: 'Mt mot.', value: fmtN(r.Mt_mot/1000, 2), unit: 'kgf·m',  cls: '' },
+        { label: 'Mi mot.', value: fmtN(r.Mi_mot/1000, 2), unit: 'kgf·m',  cls: '' },
+        { label: 'd mot.',  value: fmtN(r.d_mot_mm, 1),    unit: 'mm calc.', cls: '' },
+        { label: 'd mot.✓', value: r.d_mot_sel,             unit: 'mm sel.', cls: 'hi', tag: 'comercial' },
+        { label: 'Mi mov.', value: fmtN(r.Mi_mov/1000, 2), unit: 'kgf·m',  cls: '' },
+        { label: 'd mov.',  value: fmtN(r.d_mov_mm, 1),    unit: 'mm calc.', cls: '' },
+        { label: 'd mov.✓', value: r.d_mov_sel,             unit: 'mm sel.', cls: 'hi', tag: 'comercial' },
+      ],
+      formula: 'Mi = √((1,5·Mf)² + Mt²)   |   d = ∛(16·Mi / π·σadm)   |   σadm = 560 kgf/cm²  (ABNT 1045 c/ chaveta)',
+      select: `EIXO MOTRIZ Ø${r.d_mot_sel} mm  ·  EIXO MOVIDO Ø${r.d_mov_sel} mm  ·  ABNT 1045`,
+    },
+    {
+      num: 9, title: 'Resumo Executivo — Lista de Materiais', accent: 'accent-orange',
+      bom: true,
+      rows: [
+        { label: 'Capacidade',      value: fmtN(r.Q_th, 2) + ' t/h',  unit: '', cls: '' },
+        { label: 'Correia',         value: `${r.NL}PN3000 · ${r.NL} lonas · ${fmtN(ei.B,1)} cm`, unit: '', cls: '' },
+        { label: 'Revest.',         value: '1/8" × 1/8"',              unit: '', cls: '' },
+        { label: 'Tm max',          value: fmtN(r.Tm, 1) + ' kgf',    unit: '', cls: '' },
+        { label: '%Tad',            value: fmtN(r.pct_Tad,1) + '%',   unit: '', cls: ok ? 'ok' : 'hi' },
+        { label: 'Potência',        value: `${fmtN(r.N_kw_sel,1)} kW (${fmtN(r.N_cv_sel,0)} cv)`, unit: '', cls: 'hi' },
+        { label: 'Motoredutor',     value: `1:${Math.round(r.R)} · 4P · 60Hz · IP65`, unit: '', cls: '' },
+        { label: 'Tambor motriz',   value: `Ø${fmtN(ei.D*1000,0)} mm · v=${fmtN(ei.v,1)} m/s`, unit: '', cls: '' },
+        { label: 'Tambor movido',   value: `Ø${fmtN(ei.D*1000,0)} mm · tensão de retorno`, unit: '', cls: '' },
+        { label: 'Eixo motriz',     value: `Ø${r.d_mot_sel} mm ABNT 1045`, unit: '', cls: '' },
+        { label: 'Eixo movido',     value: `Ø${r.d_mov_sel} mm ABNT 1045`, unit: '', cls: '' },
+        { label: 'Rol. motriz',     value: fmtN(r.C_mot_kN, 2) + ' kN (C)',  unit: '', cls: '' },
+        { label: 'Rol. movido',     value: fmtN(r.C_mov_kN, 2) + ' kN (C)',  unit: '', cls: '' },
+        { label: 'Sit-lock mot.',   value: `Ø${r.d_mot_sel} mm (2 unid.)`,   unit: '', cls: '' },
+        { label: 'Sit-lock mov.',   value: `Ø${r.d_mov_sel} mm (2 unid.)`,   unit: '', cls: '' },
+        { label: 'Acop. alta',      value: `Tp ≥ ${fmtN(r.Tp_alta_Nm,0)} N·m`,  unit: '', cls: '' },
+        { label: 'Acop. baixa',     value: `Tp ≥ ${fmtN(r.Tp_baixa_Nm,0)} N·m`, unit: '', cls: '' },
+        { label: 'Canecas',         value: `n=${Math.ceil(r.N1)} und · e=${fmtN(ei.e,0)} mm · V=${fmtN(ei.V,2)} L (75%)`, unit: '', cls: '' },
+      ],
+    },
+  ];
+
+  secoes.forEach(sec => {
+    const card = document.createElement('div');
+    card.className = `result-card ${sec.accent}`;
+    const num = document.createElement('div');
+    num.className = 'rc-num';
+    num.textContent = sec.num;
+    const title = document.createElement('div');
+    title.className = 'rc-title';
+    title.textContent = sec.title;
+    const rows = document.createElement('div');
+    rows.className = 'rc-rows';
+    sec.rows.forEach(row => {
+      const rEl = document.createElement('div');
+      rEl.className = 'rc-row';
+      const lbl = document.createElement('span');
+      lbl.className = 'rc-label';
+      lbl.textContent = row.label;
+      const val = document.createElement('span');
+      val.className = 'rc-value' + (row.cls ? ' ' + row.cls : '');
+      val.appendChild(document.createTextNode(row.value + ' '));
+      if (row.unit) {
+        const em = document.createElement('em');
+        em.textContent = row.unit;
+        val.appendChild(em);
+      }
+      if (row.tag) {
+        const sm = document.createElement('small');
+        sm.className = row.tagCls || '';
+        sm.textContent = row.tag;
+        val.appendChild(sm);
+      }
+      rEl.appendChild(lbl);
+      rEl.appendChild(val);
+      rows.appendChild(rEl);
+    });
+    card.appendChild(num);
+    card.appendChild(title);
+    card.appendChild(rows);
+    if (sec.bom) rows.classList.add('rc-rows-bom');
+    if (sec.formula) {
+      const fEl = document.createElement('div');
+      fEl.className = 'rc-formula';
+      fEl.textContent = sec.formula;
+      card.appendChild(fEl);
+    }
+    if (sec.select) {
+      const sEl = document.createElement('div');
+      sEl.className = 'rc-select';
+      sEl.textContent = sec.select;
+      card.appendChild(sEl);
+    }
+    grid.appendChild(card);
+  });
+
+  // Mostra botão PDF
+  // Atualiza campo cb (readonly) com o pc calculado exibido como info
+  document.getElementById('btnPdf').classList.add('visible');
+}
+
+/* ══════════════════════════════════════
+   EXPORT PDF  — jsPDF
+══════════════════════════════════════ */
+function exportPDF() {
+  if (!lastEI || !lastR) { showToast('⚠ Calcule primeiro antes de exportar.'); return; }
+
+  // Carrega jsPDF dinamicamente se ainda não carregado
+  function gerarPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const PW = 210, PH = 297;
+    const ML = 18, MR = 18, MW = PW - ML - MR;
+    const now = new Date();
+    const dateFmt = now.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+    const dateShort = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    const ei = lastEI, r = lastR;
+
+    // ── CORES
+    const DARK   = [19, 22, 30];
+    const DARK2  = [26, 37, 64];
+    const ORANGE = [232, 93, 4];
+    const WHITE  = [255, 255, 255];
+    const GBG    = [244, 245, 247];
+    const GMID   = [222, 226, 232];
+    const GTXT   = [96, 104, 120];
+    const BLACK  = [26, 31, 46];
+
+    function setFill(c) { doc.setFillColor(...c); }
+    function setStroke(c) { doc.setDrawColor(...c); }
+    function setTxt(c) { doc.setTextColor(...c); }
+    function rect(x,y,w,h,fill,stroke) {
+      if (fill)   { setFill(fill);   }
+      if (stroke) { setStroke(stroke); doc.setLineWidth(0.3); }
+      doc.rect(x, y, w, h, fill && stroke ? 'FD' : fill ? 'F' : 'D');
+    }
+
+    // ════════════════════════════
+    // FUNÇÃO: desenhar página (header + footer)
+    // ════════════════════════════
+    function drawPage(pageNum, totalPages) {
+      // Header background
+      rect(0, 0, PW, 48, DARK2);
+      // Linha laranja inferior do header
+      setFill(ORANGE); doc.rect(0, 48, PW, 1.5, 'F');
+
+      // Logo i9 TMG
+      setTxt(WHITE); doc.setFont('helvetica','bold'); doc.setFontSize(18);
+      doc.text('i9 TMG', ML, 14);
+      doc.setFont('helvetica','normal'); doc.setFontSize(7.5);
+      setTxt([120,140,180]);
+      doc.text('Engenharia de Equipamentos de Transporte', ML, 20);
+
+      // Badge MEMORIAL DE CÁLCULO (direita)
+      const bx = PW - ML - 68, by = 8, bw = 68, bh = 32;
+      rect(bx, by, bw, bh, [30, 40, 70]);
+      setFill(ORANGE); doc.rect(bx, by, bw, 3, 'F');
+      setTxt(WHITE); doc.setFont('helvetica','bold'); doc.setFontSize(9);
+      doc.text('MEMORIAL DE CÁLCULO', bx + bw/2, by + 10, { align: 'center' });
+      doc.setFont('helvetica','normal'); doc.setFontSize(7);
+      setTxt([150,170,210]);
+      doc.text('Elevador de Canecas — 110-EL-001', bx + bw/2, by + 16, { align: 'center' });
+      doc.text('Processo: Mistura 90', bx + bw/2, by + 21, { align: 'center' });
+      doc.text('Emissão: ' + dateFmt, bx + bw/2, by + 26, { align: 'center' });
+
+      // Footer
+      setFill([240,242,244]); doc.rect(0, PH-12, PW, 12, 'F');
+      setFill(ORANGE); doc.rect(0, PH-12, PW, 0.8, 'F');
+      setTxt(GTXT); doc.setFont('helvetica','normal'); doc.setFontSize(7);
+      doc.text('i9 TMG  |  Memorial de Cálculo — 110-EL-001  |  ' + dateShort, ML, PH-5);
+      doc.text('Página ' + pageNum + ' de ' + totalPages, PW - MR, PH-5, { align: 'right' });
+    }
+
+    // ════════════════════════════
+    // HELPERS DE LAYOUT
+    // ════════════════════════════
+    let y = 54; // y inicial após header
+
+    function checkPageBreak(needed) {
+      if (y + needed > PH - 18) {
+        doc.addPage();
+        drawPage(doc.internal.getNumberOfPages(), '?');
+        y = 54;
+      }
+    }
+
+    function sectionTitle(num, title) {
+      checkPageBreak(10);
+      setFill(ORANGE); doc.rect(ML, y, 2.5, 6, 'F');
+      setTxt(DARK2); doc.setFont('helvetica','bold'); doc.setFontSize(10);
+      doc.text(num + '. ' + title.toUpperCase(), ML + 5, y + 4.5);
+      setFill(GMID); doc.rect(ML + 5 + doc.getTextWidth(num + '. ' + title.toUpperCase()) + 3, y+3, MW - doc.getTextWidth(num + '. ' + title.toUpperCase()) - 8, 0.4, 'F');
+      y += 10;
+    }
+
+    function tableHeader(cols) {
+      // cols = [{label, w, align}]
+      rect(ML, y, MW, 7, DARK2);
+      let cx = ML;
+      setTxt(WHITE); doc.setFont('helvetica','bold'); doc.setFontSize(7.5);
+      cols.forEach(c => {
+        doc.text(c.label, cx + (c.align==='right' ? c.w-2 : c.align==='center' ? c.w/2 : 2),
+                 y + 4.5, { align: c.align||'left' });
+        cx += c.w;
+      });
+      y += 7;
+    }
+
+    function tableRow(cols, vals, isOdd, highlight) {
+      const rowH = 7;
+      checkPageBreak(rowH);
+      const bg = highlight ? [255,248,240] : isOdd ? GBG : WHITE;
+      rect(ML, y, MW, rowH, bg);
+      // borda
+      setStroke(GMID); doc.setLineWidth(0.2);
+      doc.rect(ML, y, MW, rowH, 'S');
+      let cx = ML;
+      cols.forEach((c, i) => {
+        const v = vals[i] || '';
+        const color = highlight ? ORANGE : BLACK;
+        setTxt(color);
+        doc.setFont('helvetica', highlight ? 'bold' : 'normal');
+        doc.setFontSize(8.5);
+        doc.text(String(v), cx + (c.align==='right' ? c.w-2 : c.align==='center' ? c.w/2 : 3),
+                 y + 4.8, { align: c.align||'left' });
+        cx += c.w;
+      });
+      y += rowH;
+    }
+
+    function formulaBar(txt) {
+      checkPageBreak(6);
+      setFill([240,242,248]); doc.rect(ML, y, MW, 5.5, 'F');
+      setTxt([100,110,140]); doc.setFont('helvetica','italic'); doc.setFontSize(7.5);
+      doc.text(txt, ML + 3, y + 3.8);
+      y += 7;
+    }
+
+    function selectBar(txt) {
+      checkPageBreak(7);
+      setFill([255,248,240]); doc.rect(ML, y, MW, 6, 'F');
+      setFill(ORANGE); doc.rect(ML, y, 2, 6, 'F');
+      setTxt(ORANGE); doc.setFont('helvetica','bold'); doc.setFontSize(8);
+      doc.text(txt, ML + 5, y + 4);
+      y += 8;
+    }
+
+    // ════════════════════════════════════════════
+    // PÁGINA 1 — desenhar header
+    // ════════════════════════════════════════════
+    drawPage(1, 2);
+
+    // ── BLOCO PROPONENTE (dados do projeto)
+    const bw2 = MW / 2;
+    rect(ML, y, bw2, 6, DARK2); rect(ML+bw2, y, bw2, 6, DARK2);
+    setTxt(WHITE); doc.setFont('helvetica','bold'); doc.setFontSize(8);
+    doc.text('DADOS DO PROJETO', ML+3, y+4.2);
+    doc.text('DADOS DO EQUIPAMENTO', ML+bw2+3, y+4.2);
+    y += 6;
+    const infoY = y;
+    rect(ML, y, bw2, 24, GBG); rect(ML+bw2, y, bw2, 24, WHITE);
+    setStroke(GMID); doc.setLineWidth(0.3); doc.rect(ML, infoY, MW, 24, 'S');
+    setTxt(BLACK); doc.setFont('helvetica','normal'); doc.setFontSize(8.5);
+    const proj = [
+      ['Processo:',    'Mistura 90'],
+      ['Equipamento:', '110-EL-001'],
+      ['Material:',    'Milho / ' + fmtN(ei.gamma,2) + ' t/m³'],
+      ['Emissão:',     dateFmt],
+    ];
+    const equip = [
+      ['Capacidade:',  fmtN(r.Q_th,2) + ' t/h'],
+      ['Altura C-C:',  fmtN(ei.H,1) + ' m'],
+      ['Velocidade:',  fmtN(ei.v,1) + ' m/s'],
+      ['Motor:',       fmtN(r.N_kw,2) + ' kW  ·  ' + fmtN(r.N_cv,1) + ' cv'],
+    ];
+    proj.forEach((row,i) => {
+      doc.setFont('helvetica','bold'); setTxt(GTXT);
+      doc.text(row[0], ML+3, infoY + 6 + i*5);
+      doc.setFont('helvetica','normal'); setTxt(BLACK);
+      doc.text(row[1], ML+30, infoY + 6 + i*5);
+    });
+    equip.forEach((row,i) => {
+      doc.setFont('helvetica','bold'); setTxt(GTXT);
+      doc.text(row[0], ML+bw2+3, infoY + 6 + i*5);
+      doc.setFont('helvetica','normal'); setTxt(BLACK);
+      doc.text(row[1], ML+bw2+30, infoY + 6 + i*5);
+    });
+    y += 28;
+
+    // ════════════════════════
+    // 1. PARÂMETROS DE ENTRADA
+    // ════════════════════════
+    sectionTitle(1, 'Parâmetros de Entrada');
+    const pCols = [{label:'Símbolo',w:22},{label:'Descrição',w:80},{label:'Valor',w:30,align:'right'},{label:'Unidade',w:42}];
+    tableHeader(pCols);
+    const params = [
+      ['V',    'Volume da caneca (75%)',         fmtN(ei.V,2),    'L'],
+      ['n',    'Número de fileiras',              ei.n,            'und'],
+      ['e',    'Passo das canecas',               fmtN(ei.e,0),   'mm'],
+      ['p',    'Peso de uma caneca',              fmtN(ei.p,3),   'kg'],
+      ['v',    'Velocidade da correia',           fmtN(ei.v,2),   'm/s'],
+      ['D',    'Diâm. tambor motriz',             fmtN(ei.D,3),   'm'],
+      ['H',    'Altura centro-a-centro',          fmtN(ei.H,2),   'm'],
+      ['Ho',   'Altura de saída',                 fmtN(ei.Ho,2),  'm'],
+      ['γ',    'Peso específico do material',     fmtN(ei.gamma,3),'t/m³'],
+      ['CF1',  'Coef. enchimento',                fmtN(ei.CF1,3), 'adm'],
+      ['CF2',  'Coef. homogeneidade',             fmtN(ei.CF2,2), 'adm'],
+      ['Tu',   'Tensão admissível da lona',       fmtN(ei.Tu,1),  'kgf/cm'],
+      ['B',    'Largura da correia',              fmtN(ei.B,2),   'cm'],
+      ['k',    'Fator de acionamento',            fmtN(ei.k,2),   'adm'],
+      ['cb',   'Espessura por lona (PN3000)',      fmtN(ei.cb,1),  'mm'],
+      ['η',    'Rendimento do conjunto',          fmtN(ei.eta,2), 'adm'],
+      ['Rm',   'Rotação do motor',                fmtN(ei.Rm,0),  'rpm'],
+    ];
+    params.forEach((p,i) => tableRow(pCols, p, i%2===1));
+    y += 4;
+
+    // ════════════════════════
+    // 2. CAPACIDADE
+    // ════════════════════════
+    sectionTitle(2, 'Capacidade de Transporte');
+    const cCols = [{label:'Variável',w:25},{label:'Descrição',w:80},{label:'Resultado',w:35,align:'right'},{label:'Unidade',w:34}];
+    tableHeader(cCols);
+    tableRow(cCols, ['Q', 'Capacidade volumétrica',   fmtN(r.Q_m3h,2), 'm³/h'], false);
+    tableRow(cCols, ['Q', 'Capacidade mássica',       fmtN(r.Q_th,2),  't/h'],  true, true);
+    formulaBar('Q = 3600 · V · n · v · CF1 · CF2 / e   →   ' + fmtN(r.Q_th,2) + ' t/h');
+
+    // ════════════════════════
+    // 3. GEOMETRIA
+    // ════════════════════════
+    sectionTitle(3, 'Geometria da Correia');
+    tableHeader(cCols);
+    [
+      ['Ca', 'Comprimento total da correia',  fmtN(r.Ca,3),  'm'],
+      ['N1', 'Número de canecas',             Math.ceil(r.N1), 'und'],
+      ['Pm', 'Peso do material por metro',    fmtN(r.Pm,3),  'kg/m'],
+      ['p1', 'Peso material na caneca (100%)', fmtN(r.p1,3),  'kg'],
+      ['pc', 'Peso da correia calculado',     fmtN(r.pc,3),  'kg/m'],
+    ].forEach((row,i) => tableRow(cCols, row, i%2===1));
+    formulaBar('Ca = π·D + 2H   |   N1 = 1000·Ca·n / e   |   pc = NL·cb·B/100·1,1');
+
+    // ════════════════════════
+    // 4. TENSÕES
+    // ════════════════════════
+    doc.addPage();
+    drawPage(2, 2);
+    y = 54;
+
+    sectionTitle(4, 'Tensões na Correia');
+    tableHeader(cCols);
+    [
+      ['Tp',          'Tensão estática total',         fmtN(r.Tp,1),  'kgf'],
+      ['Te(a)',        'Tens. efetiva — fórmula (a)',   fmtN(r.Te_a || 0,1), 'kgf'],
+      ['Te(b)',        'Tens. efetiva — fórmula (b)',   fmtN(r.Te_b || 0,1), 'kgf'],
+      ['Te ' + (r.forma==='b'?'(b adotado)':'(a adotado)'), 'Tensão efetiva adotada', fmtN(r.Te,1), 'kgf'],
+      ['Tm',           'Tensão máxima na correia',      fmtN(r.Tm,1),  'kgf'],
+      ['K_ab',         'Coef. de acionamento (e^µα-1)⁻¹', fmtN(r.K_ab,4), 'adm'],
+      ['Pe',           'Peso do esticador',             fmtN(r.Pe,1),  'kgf'],
+    ].forEach((row,i) => {
+      const hi = row[0].startsWith('Tm');
+      tableRow(cCols, row, i%2===1, hi);
+    });
+    formulaBar('Tm = (1+k)·Te = ' + fmtN(r.Tm,1) + ' kgf   |   Te = max(Te_a, Te_b) → forma (' + r.forma + ') governa');
+
+    // ════════════════════════
+    // 5. SELEÇÃO DA CORREIA
+    // ════════════════════════
+    sectionTitle(5, 'Seleção da Correia');
+    tableHeader(cCols);
+    [
+      ['Ut',   'Tensão por unidade de largura',   fmtN(r.Ut,2),  'kgf/cm'],
+      ['Nm',   'Número mínimo de lonas',           fmtN(r.Nm,2),  'lonas'],
+      ['NL',   'Lonas selecionadas (mín. 4)',      r.NL,          'lonas'],
+      ['%Tad', 'Aproveitamento da correia',        fmtN(r.pct_Tad,1)+'%', r.pct_Tad<=75?'✓ OK':'⚠ ACIMA 75%'],
+    ].forEach((row,i) => {
+      const hi = row[0]==='NL' || row[0]==='%Tad';
+      tableRow(cCols, row, i%2===1, hi);
+    });
+    selectBar('CORREIA SELECIONADA: ' + r.NL + 'PN3000  ·  REVEST. 1/8"×1/8"  ·  ' + r.NL + ' LONAS  ·  ' + fmtN(ei.B,2) + ' cm');
+
+    // ════════════════════════
+    // 6. POTÊNCIA E REDUTOR
+    // ════════════════════════
+    sectionTitle(6, 'Potência e Redutor');
+    tableHeader(cCols);
+    [
+      ['γ proj.', 'Dens. projeto (pior caso)',     fmtN(ei.gammaN,2),    't/m³'],
+      ['N',       'Potência calculada',             fmtN(r.N_cv,2),      'cv'],
+      ['N sel.',  'Potência selecionada',           fmtN(r.N_cv_sel,0),  'cv'],
+      ['N sel.',  'Potência selecionada',           fmtN(r.N_kw_sel,2),  'kW'],
+      ['rs',      'Rotação saída do redutor',       fmtN(r.rs,1),        'rpm'],
+      ['R',       'Relação de redução',             '1 : ' + fmtN(r.R,1), ''],
+    ].forEach((row,i) => tableRow(cCols, row, i%2===1, row[0]==='N sel.' && row[3]==='kW'));
+    formulaBar('N = v · Pm · (H + 7D) / (75·η)   |   Pm = 1000·n·γ·V(75%)/e   |   γ proj. = ' + fmtN(ei.gammaN,2) + ' t/m³ (conservador)');
+    selectBar('MOTORREDUTOR: 1:' + Math.round(r.R) + '  ·  ' + fmtN(r.N_kw_sel,1) + ' kW (' + fmtN(r.N_cv_sel,0) + ' cv)  ·  4P  ·  60Hz  ·  IP65');
+
+    // ════════════════════════
+    // 7. ROLAMENTOS
+    // ════════════════════════
+    sectionTitle(7, 'Capacidade de Carga dos Rolamentos  (L10h = 50 000 h)');
+    tableHeader(cCols);
+    [
+      ['C mot.', 'Rolamento tambor motriz',     fmtN(r.C_mot_kN,2), 'kN'],
+      ['C mov.', 'Rolamento tambor movido',     fmtN(r.C_mov_kN,2), 'kN'],
+      ['n',      'Rotação dos tambores',        fmtN(r.rs,1),       'rpm'],
+    ].forEach((row,i) => tableRow(cCols, row, i%2===1));
+    formulaBar('C = P · ∛(60·n·L10h / 10⁶)');
+
+    // ════════════════════════
+    // 8. DIMENSIONAMENTO DOS EIXOS
+    // ════════════════════════
+    doc.addPage();
+    drawPage(3, '?');
+    y = 54;
+
+    sectionTitle(8, 'Dimensionamento dos Eixos');
+    tableHeader(cCols);
+    [
+      ['Mf mot.', 'Momento fletor — eixo motriz',  fmtN(r.Mf_mot/1000,2), 'kgf·m'],
+      ['Mt mot.', 'Momento torsor — eixo motriz',  fmtN(r.Mt_mot/1000,2), 'kgf·m'],
+      ['Mi mot.', 'Momento equiv. — eixo motriz',  fmtN(r.Mi_mot/1000,2), 'kgf·m'],
+      ['d mot.',  'Diâm. calc. eixo motriz',       fmtN(r.d_mot_mm,1),    'mm'],
+      ['d mot.✓', 'Diâm. sel. eixo motriz',        r.d_mot_sel,           'mm'],
+      ['Mi mov.', 'Momento equiv. — eixo movido',  fmtN(r.Mi_mov/1000,2), 'kgf·m'],
+      ['d mov.',  'Diâm. calc. eixo movido',       fmtN(r.d_mov_mm,1),    'mm'],
+      ['d mov.✓', 'Diâm. sel. eixo movido',        r.d_mov_sel,           'mm'],
+    ].forEach((row,i) => {
+      const hi = row[0].includes('✓');
+      tableRow(cCols, row, i%2===1, hi);
+    });
+    formulaBar('Mi = √((1,5·Mf)² + Mt²)   |   d = ∛(16·Mi / π·σadm)   |   σadm = 560 kgf/cm²  (ABNT 1045)');
+    selectBar('EIXO MOTRIZ: Ø' + r.d_mot_sel + ' mm  ·  EIXO MOVIDO: Ø' + r.d_mov_sel + ' mm  ·  ABNT 1045 NORMALIZADO');
+
+    // ════════════════════════
+    // 9. ACOPLAMENTOS
+    // ════════════════════════
+    sectionTitle(9, 'Acoplamentos');
+    tableHeader(cCols);
+    [
+      ['Tn alta',  'Torque nominal — acoplamento alta',  fmtN(r.Tn_alta_Nm,1),  'N·m'],
+      ['Tp alta',  'Torque projeto — acoplamento alta',  fmtN(r.Tp_alta_Nm,1),  'N·m'],
+      ['Tn baixa', 'Torque nominal — acoplamento baixa', fmtN(r.Tn_baixa_Nm,0), 'N·m'],
+      ['Tp baixa', 'Torque projeto — acoplamento baixa', fmtN(r.Tp_baixa_Nm,0), 'N·m'],
+    ].forEach((row,i) => {
+      const hi = row[0].includes('Tp');
+      tableRow(cCols, row, i%2===1, hi);
+    });
+    formulaBar('Tn = 9550 · kW / n   |   Tp = fs · Tn   |   fs = 2,0 (choque moderado — NBR 7096)');
+    selectBar(
+      'ACOP. ALTA: Tp ≥ ' + fmtN(r.Tp_alta_Nm,0) + ' N·m  @  ' + fmtN(ei.Rm,0) + ' rpm' +
+      '  ·  ACOP. BAIXA: Tp ≥ ' + fmtN(r.Tp_baixa_Nm,0) + ' N·m  @  ' + fmtN(r.rs,1) + ' rpm'
+    );
+
+    // ════════════════════════
+    // TOTALIZADOR FINAL (LISTA DE MATERIAIS COMPLETA)
+    // ════════════════════════
+    y += 6;
+    checkPageBreak(17 * 7.5 + 10);
+    const totW = 130, totX = ML + (MW - totW) / 2;
+    rect(totX, y, totW, 7, DARK2);
+    setTxt(WHITE); doc.setFont('helvetica','bold'); doc.setFontSize(8.5);
+    doc.text('RESUMO EXECUTIVO — LISTA DE MATERIAIS', totX + totW/2, y+4.5, {align:'center'});
+    y += 7;
+    const totRows = [
+      ['Capacidade',       fmtN(r.Q_th,2) + ' t/h'],
+      ['Correia',          r.NL + 'PN3000  ·  ' + r.NL + ' lonas  ·  ' + fmtN(ei.B,1) + ' cm'],
+      ['Revestimento',     '1/8" × 1/8"'],
+      ['Tensão máx.',      fmtN(r.Tm,1) + ' kgf'],
+      ['Aproveitamento',   fmtN(r.pct_Tad,1) + '%  ' + (r.pct_Tad<=75?'✓ OK':'⚠ VERIFICAR')],
+      ['Motoredutor',      fmtN(r.N_kw_sel,1) + ' kW (' + fmtN(r.N_cv_sel,0) + ' cv)  ·  1:' + Math.round(r.R) + '  ·  4P · 60Hz · IP65'],
+      ['Tambor motriz',    'Ø' + fmtN(ei.D*1000,0) + ' mm  ·  v = ' + fmtN(ei.v,1) + ' m/s'],
+      ['Tambor movido',    'Ø' + fmtN(ei.D*1000,0) + ' mm  ·  tensão de retorno'],
+      ['Eixo motriz',      'Ø' + r.d_mot_sel + ' mm  ·  ABNT 1045 normalizado'],
+      ['Eixo movido',      'Ø' + r.d_mov_sel + ' mm  ·  ABNT 1045 normalizado'],
+      ['Rol. motriz',      'C ≥ ' + fmtN(r.C_mot_kN,2) + ' kN  ·  L10h = 50 000 h'],
+      ['Rol. movido',      'C ≥ ' + fmtN(r.C_mov_kN,2) + ' kN  ·  L10h = 50 000 h'],
+      ['Sit-lock motriz',  'Ø' + r.d_mot_sel + ' mm  ·  2 unidades'],
+      ['Sit-lock movido',  'Ø' + r.d_mov_sel + ' mm  ·  2 unidades'],
+      ['Acop. alta vel.',  'Tp ≥ ' + fmtN(r.Tp_alta_Nm,0) + ' N·m  @  ' + fmtN(ei.Rm,0) + ' rpm'],
+      ['Acop. baixa vel.', 'Tp ≥ ' + fmtN(r.Tp_baixa_Nm,0) + ' N·m  @  ' + fmtN(r.rs,1) + ' rpm'],
+      ['Canecas',          Math.ceil(r.N1) + ' und  ·  e = ' + fmtN(ei.e,0) + ' mm  ·  V = ' + fmtN(ei.V,2) + ' L (75%)'],
+    ];
+    totRows.forEach((row, i) => {
+      const rh = 7.5;
+      const isAprov = i === 4;
+      const bg = isAprov ? (r.pct_Tad<=75 ? [230,248,235] : [255,240,240]) : (i%2===0 ? GBG : WHITE);
+      rect(totX, y, totW, rh, bg);
+      setStroke(GMID); doc.setLineWidth(0.2); doc.rect(totX, y, totW, rh, 'S');
+      setTxt(GTXT); doc.setFont('helvetica','bold'); doc.setFontSize(7.5);
+      doc.text(row[0], totX+3, y+5);
+      setTxt(isAprov && r.pct_Tad>75 ? [180,30,30] : DARK2);
+      doc.setFont('helvetica','normal'); doc.setFontSize(8);
+      doc.text(row[1], totX+totW-3, y+5, {align:'right'});
+      y += rh;
+    });
+
+    // Corrigir total de páginas agora que sabemos
+    const totalPgs = doc.internal.getNumberOfPages();
+    for (let pg=1; pg<=totalPgs; pg++) {
+      doc.setPage(pg);
+      // Reescrever footer com total correto
+      setFill([240,242,244]); doc.rect(0, PH-12, PW, 12, 'F');
+      setFill(ORANGE); doc.rect(0, PH-12, PW, 0.8, 'F');
+      setTxt(GTXT); doc.setFont('helvetica','normal'); doc.setFontSize(7);
+      doc.text('i9 TMG  |  Memorial de Cálculo — 110-EL-001  |  ' + dateShort, ML, PH-5);
+      doc.text('Página ' + pg + ' de ' + totalPgs, PW - MR, PH-5, {align:'right'});
+    }
+
+    doc.save('memorial_calculo_110-EL-001.pdf');
+    showToast('✓ PDF gerado com sucesso!');
+  }
+
+  if (window.jspdf) {
+    gerarPDF();
+  } else {
+    showToast('⏳ Carregando gerador de PDF…');
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+    script.onload = gerarPDF;
+    script.onerror = () => showToast('⚠ Erro ao carregar jsPDF.');
+    document.head.appendChild(script);
+  }
+}
+
+/* ══════════════════════════════════════
+   ACESSIBILIDADE — TAMANHO DE FONTE
+══════════════════════════════════════ */
+const FONT_LEVELS = [
+  { cls: '',        label: '1', title: 'Normal'         },
+  { cls: 'font-lg', label: '2', title: 'Visão — Grande' },
+  { cls: 'font-xl', label: '3', title: 'Visão — Maior'  },
+];
+let fontIdx = 0;
+
+function ciclarFonte() {
+  // Remove classe atual
+  if (FONT_LEVELS[fontIdx].cls) document.body.classList.remove(FONT_LEVELS[fontIdx].cls);
+  // Avança (volta ao normal após nível máximo)
+  fontIdx = (fontIdx + 1) % FONT_LEVELS.length;
+  // Aplica nova classe
+  if (FONT_LEVELS[fontIdx].cls) document.body.classList.add(FONT_LEVELS[fontIdx].cls);
+  // Atualiza badge e tooltip
+  const lvl = document.getElementById('a11yLevel');
+  const btn = document.getElementById('btnFonte');
+  if (lvl) lvl.textContent = FONT_LEVELS[fontIdx].label;
+  if (btn) btn.title = FONT_LEVELS[fontIdx].title;
+  // Persiste preferência
+  try { localStorage.setItem('fontLevel', fontIdx); } catch(e) {}
+}
+
+// Restaura preferência ao carregar
+(function() {
+  try {
+    const saved = parseInt(localStorage.getItem('fontLevel'));
+    if (saved > 0 && saved < FONT_LEVELS.length) {
+      fontIdx = saved - 1; // ciclarFonte vai incrementar
+      ciclarFonte();
+    }
+  } catch(e) {}
+})();
+
+/* ══════════════════════════════════════
+   CALCULAR
+══════════════════════════════════════ */
+function doCalcular(sourceId) {
+  try {
+    const ei = readInputs(sourceId);
+    const r  = calcular(ei);
+    showResults(ei, r);
+    closeSheet();
+    if (window.innerWidth <= 640) {
+      document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
+    }
+  } catch(e) {
+    showToast('⚠ ' + e.message);
+  }
+}
+
+/* ══════════════════════════════════════
+   BOTTOM SHEET
+══════════════════════════════════════ */
+function openSheet() {
+  syncForms('sidebarScroll', 'sheetBody');
+  document.getElementById('bottomSheet').classList.add('open');
+  document.getElementById('sheetOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSheet() {
+  syncForms('sheetBody', 'sidebarScroll');
+  document.getElementById('bottomSheet').classList.remove('open');
+  document.getElementById('sheetOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ══════════════════════════════════════
+   INIT
+══════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  buildForm(document.getElementById('sidebarScroll'));
+  buildForm(document.getElementById('sheetBody'));
+
+  document.getElementById('btnCalcDesktop').addEventListener('click', () => doCalcular('sidebarScroll'));
+  document.getElementById('btnCalcMobile').addEventListener('click',  () => doCalcular('sheetBody'));
+  document.getElementById('fab').addEventListener('click', openSheet);
+  document.getElementById('sheetClose').addEventListener('click', closeSheet);
+  document.getElementById('sheetOverlay').addEventListener('click', closeSheet);
+
+  let startY = 0;
+  const sheet = document.getElementById('bottomSheet');
+  sheet.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
+  sheet.addEventListener('touchend',   e => {
+    if (e.changedTouches[0].clientY - startY > 80) closeSheet();
+  }, { passive: true });
+});
+</script>
+</body>
+</html>
